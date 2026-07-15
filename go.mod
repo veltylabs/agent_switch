@@ -1,4 +1,4 @@
-module github.com/veltylabs/agent-switch
+module github.com/veltylabs/agent_switch
 
 go 1.25.2
 
