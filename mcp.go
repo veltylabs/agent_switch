@@ -18,8 +18,8 @@ const (
 )
 
 type Deps struct {
-	IDs       model.IDGenerator // required — the module never builds its own
-	Publisher events.Publisher  // optional — nil disables publishing silently
+	IDs       model.IDGenerator // requerido — el módulo nunca lo construye por sí mismo
+	Publisher events.Publisher  // opcional — nil desactiva la publicación silenciosamente
 }
 
 type Module struct {
@@ -40,7 +40,7 @@ func New(db *orm.DB, deps Deps) (*Module, error) {
 	return &Module{db: db, ids: deps.IDs, pub: deps.Publisher}, nil
 }
 
-// GetStatus returns the latest audit row, or nil if the log is empty (never toggled yet).
+// GetStatus devuelve la última fila de auditoría, o nil si el registro está vacío (nunca se ha cambiado el estado).
 func (m *Module) GetStatus() (*AgentSwitch, error) {
 	rows, err := ReadAllAgentSwitch(
 		m.db.Query(&AgentSwitch{}).OrderBy(AgentSwitch_.ChangedAt).Desc().Limit(1),
@@ -54,7 +54,7 @@ func (m *Module) GetStatus() (*AgentSwitch, error) {
 	return rows[0], nil
 }
 
-// Toggle inserts a new audit row. Append-only — never updates or deletes existing rows.
+// Toggle inserta una nueva fila de auditoría. Solo inserción (append-only) — nunca actualiza ni elimina filas existentes.
 func (m *Module) Toggle(args ToggleArgs) (*AgentSwitch, error) {
 	if args.ChangedBy == "" {
 		return nil, ErrChangedByRequired
@@ -75,7 +75,7 @@ func (m *Module) Toggle(args ToggleArgs) (*AgentSwitch, error) {
 	return row, nil
 }
 
-// History returns every audit row, newest first.
+// History devuelve todas las filas de auditoría, de la más nueva a la más antigua.
 func (m *Module) History() ([]*AgentSwitch, error) {
 	return ReadAllAgentSwitch(
 		m.db.Query(&AgentSwitch{}).OrderBy(AgentSwitch_.ChangedAt).Desc(),
@@ -120,8 +120,8 @@ func (m *Module) opToggleAgentStatus(ctx router.Context) {
 		ctx.WriteStatus(400)
 		return
 	}
-	// Fail-closed doctrine: decode → validate → service. Validate runs the Definition's
-	// declared constraints (NotNull on changed_by) — the generated method, never re-implemented.
+	// Doctrina de fallo cerrado: decodificar → validar → servicio. Validate ejecuta las restricciones declaradas
+	// de la definición (NotNull en changed_by) — el método generado, nunca reimplementado.
 	if err := args.Validate(model.ActionCreate); err != nil {
 		ctx.WriteStatus(400)
 		return

@@ -10,7 +10,7 @@ import (
 	"github.com/tinywasm/storage/mem"
 )
 
-func setup(t *testing.T) (*agentswitch.Module, *MockPublisher) {
+func setup(t *testing.T) (*agentswitch.Module, *MockPublisher, *orm.DB) {
 	t.Helper()
 	db := orm.New(mem.New())
 	pub := &MockPublisher{}
@@ -18,11 +18,11 @@ func setup(t *testing.T) (*agentswitch.Module, *MockPublisher) {
 	if err != nil {
 		t.Fatalf("New: %v", err)
 	}
-	return m, pub
+	return m, pub, db
 }
 
 func TestGetStatus_NoHistory(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	row, err := m.GetStatus()
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -33,7 +33,7 @@ func TestGetStatus_NoHistory(t *testing.T) {
 }
 
 func TestGetStatus_Enabled(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	if _, err := m.Toggle(agentswitch.ToggleArgs{IsEnabled: true, ChangedBy: "u1", Reason: "test"}); err != nil {
 		t.Fatalf("Toggle: %v", err)
 	}
@@ -47,7 +47,7 @@ func TestGetStatus_Enabled(t *testing.T) {
 }
 
 func TestGetStatus_ReturnsLatestOnly(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	for _, a := range []agentswitch.ToggleArgs{
 		{IsEnabled: true, ChangedBy: "u1", Reason: "1"},
 		{IsEnabled: true, ChangedBy: "u2", Reason: "2"},
@@ -67,7 +67,7 @@ func TestGetStatus_ReturnsLatestOnly(t *testing.T) {
 }
 
 func TestToggle_Enable(t *testing.T) {
-	m, pub := setup(t)
+	m, pub, _ := setup(t)
 	row, err := m.Toggle(agentswitch.ToggleArgs{IsEnabled: true, ChangedBy: "u1", Reason: "test"})
 	if err != nil {
 		t.Fatalf("Toggle: %v", err)
@@ -81,7 +81,7 @@ func TestToggle_Enable(t *testing.T) {
 }
 
 func TestToggle_MissingChangedBy(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	_, err := m.Toggle(agentswitch.ToggleArgs{IsEnabled: true})
 	if err != agentswitch.ErrChangedByRequired {
 		t.Fatalf("expected ErrChangedByRequired, got %v", err)
@@ -89,7 +89,7 @@ func TestToggle_MissingChangedBy(t *testing.T) {
 }
 
 func TestToggle_AppendOnly(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	if _, err := m.Toggle(agentswitch.ToggleArgs{IsEnabled: true, ChangedBy: "u1"}); err != nil {
 		t.Fatalf("Toggle 1: %v", err)
 	}
@@ -106,7 +106,7 @@ func TestToggle_AppendOnly(t *testing.T) {
 }
 
 func TestMountOps_RegistersBothOps(t *testing.T) {
-	m, _ := setup(t)
+	m, _, _ := setup(t)
 	reg := &mock.Router{}
 	reg.Configure(mock.Config{Authorize: func(userID string, r model.Resource, a model.Action) bool { return true }})
 	m.MountOps(reg)

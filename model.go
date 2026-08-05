@@ -8,16 +8,16 @@ import (
 
 var ErrChangedByRequired = fmt.Err("changed_by is required")
 
-// AgentSwitchModel: append-only audit row. No UPDATE, no DELETE — see AGENTS.md
-// "Domain-specific notes". No widget on any field: nothing renders this record
-// directly (same as today's generated model_orm.go, which has no Widget: on any
-// of AgentSwitch's fields — do not add one here).
+// AgentSwitchModel: fila de auditoría de solo inserción (append-only). Sin UPDATE, sin DELETE — ver AGENTS.md
+// "Domain-specific notes". Sin widget en ningún campo: nada renderiza este registro
+// directamente (igual que el model_orm.go generado anteriormente, que no tiene Widget: en ningún
+// de los campos de AgentSwitch — no agregar uno aquí).
 //
-// changed_at is a NEW column (not present in the struct+tags version this replaces).
-// It replaces deriving the timestamp from the id (unixid-specific; model.IDGenerator
-// exposes only NewID() string) — see docs/PLAN.md §1a for the full rationale. Set at
-// insert time via github.com/tinywasm/time.Now() (Stage 3); read via
-// ORDER BY changed_at DESC LIMIT 1 (Stage 5), not ORDER BY id DESC.
+// changed_at es una NUEVA columna (not present en la versión de struct+tags que reemplaza).
+// Reemplaza la derivación de la marca de tiempo a partir del id (específico de unixid; model.IDGenerator
+// expone solo NewID() string) — ver docs/PLAN.md §1a para la justificación completa. Se establece en el
+// momento de la inserción mediante github.com/tinywasm/time.Now() (Etapa 3); se lee mediante
+// ORDER BY changed_at DESC LIMIT 1 (Etapa 5), no ORDER BY id DESC.
 var AgentSwitchModel = model.Definition{
 	Name: "agent_switch",
 	Fields: model.Fields{
@@ -29,11 +29,11 @@ var AgentSwitchModel = model.Definition{
 	},
 }
 
-// The 4 Definitions below are transport-only (DB: nil on every field, implicitly —
-// never set DB at all) — args/results of this module's two ops. Widget policy (see
-// the note above §2's target file): ToggleArgsModel is the only user-editable record,
-// so it alone carries input widgets; the three result models are output-only and use
-// base kinds — a result must never render as an editable form.
+// Las 4 definiciones de abajo son de solo transporte (DB: nil en cada campo, implícitamente —
+// nunca se establece DB) — argumentos/resultados de las dos operaciones de este módulo. Política de widgets (ver
+// la nota arriba del archivo de destino §2): ToggleArgsModel es el único registro editable por el usuario,
+// por lo que solo él lleva widgets de entrada; los tres modelos de resultado son de solo salida y usan
+// tipos base — un resultado nunca debe renderizarse como un formulario editable.
 
 var StatusEmptyResultModel = model.Definition{
 	Name: "status_empty_result",
