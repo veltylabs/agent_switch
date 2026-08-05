@@ -3,8 +3,9 @@ PLAN: "test: agent_switch replace coverage-padding test with real-value tests"
 TAG: v0.1.1
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 3091233685175467547
+PR: https://github.com/veltylabs/agent_switch/pull/8
 ---
 
 > This plan is dispatched via the CodeJob workflow. See skill: **agents-workflow**.
