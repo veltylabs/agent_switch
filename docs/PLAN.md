@@ -3,6 +3,8 @@ PLAN: "feat: agent_switch joins the reusable-module harness (OpModule, IDGenerat
 TAG: v0.1.0
 EXECUTOR: jules
 REVIEWER: none
+STATUS: running
+SESSION: 11670371054963981710
 ---
 
 > This plan is dispatched via the CodeJob workflow. See skill: **agents-workflow**.
