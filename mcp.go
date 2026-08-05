@@ -92,7 +92,7 @@ func (m *Module) Toggle(ctx *context.Context, req mcp.Request) (*mcp.Result, err
 	}
 
 	row := &AgentSwitch{
-		ID:        m.uid.GetNewID(),
+		ID:        m.uid.NewID(),
 		IsEnabled: args.IsEnabled,
 		ChangedBy: args.ChangedBy,
 		Reason:    args.Reason,

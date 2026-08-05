@@ -41,7 +41,7 @@ func TestTools(t *testing.T) {
 func TestGetAgentStatus_Enabled(t *testing.T) {
 	m := setupTestModule(t)
 	m.db.Create(&AgentSwitch{
-		ID:        m.uid.GetNewID(),
+		ID:        m.uid.NewID(),
 		IsEnabled: true,
 		ChangedBy: "u1",
 		Reason:    "test",
@@ -109,19 +109,19 @@ func TestGetAgentStatus_NoHistory(t *testing.T) {
 func TestGetAgentStatus_ReturnsLatestOnly(t *testing.T) {
 	m := setupTestModule(t)
 	m.db.Create(&AgentSwitch{
-		ID:        m.uid.GetNewID(),
+		ID:        m.uid.NewID(),
 		IsEnabled: true,
 		ChangedBy: "u1",
 		Reason:    "1",
 	})
 	m.db.Create(&AgentSwitch{
-		ID:        m.uid.GetNewID(),
+		ID:        m.uid.NewID(),
 		IsEnabled: true,
 		ChangedBy: "u2",
 		Reason:    "2",
 	})
 	m.db.Create(&AgentSwitch{
-		ID:        m.uid.GetNewID(),
+		ID:        m.uid.NewID(),
 		IsEnabled: false,
 		ChangedBy: "u3",
 		Reason:    "3",
