@@ -3,11 +3,11 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/json"
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/orm"
-	"github.com/tinywasm/router/mock"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/json"
+	"webtyp.com/model"
+	"webtyp.com/orm"
+	"webtyp.com/router/mock"
+	"webtyp.com/storage/mem"
 	agentswitch "github.com/veltylabs/agent_switch"
 )
 

@@ -1,9 +1,9 @@
 package agentswitch
 
 import (
-	"github.com/tinywasm/fmt"
-	"github.com/tinywasm/form/input"
-	"github.com/tinywasm/model"
+	"webtyp.com/fmt"
+	"webtyp.com/form/input"
+	"webtyp.com/model"
 )
 
 var ErrChangedByRequired = fmt.Err("changed_by is required")
@@ -16,7 +16,7 @@ var ErrChangedByRequired = fmt.Err("changed_by is required")
 // changed_at es una NUEVA columna (not present en la versión de struct+tags que reemplaza).
 // Reemplaza la derivación de la marca de tiempo a partir del id (específico de unixid; model.IDGenerator
 // expone solo NewID() string) — ver docs/PLAN.md §1a para la justificación completa. Se establece en el
-// momento de la inserción mediante github.com/tinywasm/time.Now() (Etapa 3); se lee mediante
+// momento de la inserción mediante webtyp.com/time.Now() (Etapa 3); se lee mediante
 // ORDER BY changed_at DESC LIMIT 1 (Etapa 5), no ORDER BY id DESC.
 var AgentSwitchModel = model.Definition{
 	Name: "agent_switch",

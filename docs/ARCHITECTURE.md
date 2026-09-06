@@ -24,7 +24,7 @@ Every state change is persisted as a new row; no data is ever mutated or deleted
       Unlike the pre-harness version, the module does **not** derive `changed_at` from the ID
       (`model.IDGenerator` exposes only `NewID() string`, no timestamp extraction — that was a
       `unixid`-specific capability). `changed_at` is an explicit `int64` column, set via
-      `github.com/tinywasm/time.Now()` at insert time.
+      `github.com/webtyp/time.Now()` at insert time.
     - `events.Publisher` for event-driven updates (`Deps.Publisher`, optional — `nil` disables
       publishing silently). Every successful `Toggle` publishes `TopicAgentToggled` with the new
       `*AgentSwitch` row as payload.
