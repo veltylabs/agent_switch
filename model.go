@@ -2,7 +2,7 @@ package agentswitch
 
 import (
 	"webtyp.com/fmt"
-	"webtyp.com/form/input"
+	"webtyp.com/input"
 	"webtyp.com/model"
 )
 
