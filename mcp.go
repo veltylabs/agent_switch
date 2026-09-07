@@ -84,12 +84,12 @@ func (m *Module) History() ([]*AgentSwitch, error) {
 
 func (m *Module) ModelName() string { return "agent_switch" }
 
-func (m *Module) MountOps(reg router.OpRegistry) {
-	reg.Op(OpGetAgentStatus, m.opGetAgentStatus).Requires("agent_switch", model.Read).Accepts(nil)
-	reg.Op(OpToggleAgentStatus, m.opToggleAgentStatus).Requires("agent_switch", model.Update).Accepts(&ToggleArgs{})
+func (m *Module) MountOperations(reg router.OperationRegistry) {
+	reg.Operation(OpGetAgentStatus, m.opGetAgentStatus).Requires("agent_switch", model.Read).Accepts(nil)
+	reg.Operation(OpToggleAgentStatus, m.opToggleAgentStatus).Requires("agent_switch", model.Update).Accepts(&ToggleArgs{})
 }
 
-var _ router.OpModule = (*Module)(nil)
+var _ router.OperationModule = (*Module)(nil)
 
 func (m *Module) opGetAgentStatus(ctx router.Context) {
 	row, err := m.GetStatus()

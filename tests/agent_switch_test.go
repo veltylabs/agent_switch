@@ -106,14 +106,14 @@ func TestToggle_AppendOnly(t *testing.T) {
 	}
 }
 
-func TestMountOps_RegistersBothOps(t *testing.T) {
+func TestMountOperations_RegistersBothOps(t *testing.T) {
 	m, _, _ := setup(t)
 	if m.ModelName() != "agent_switch" {
 		t.Fatalf("expected ModelName %q, got %q", "agent_switch", m.ModelName())
 	}
 	reg := &mock.Router{}
 	reg.Configure(mock.Config{Authorize: func(userID string, r model.Resource, a model.Action) bool { return true }})
-	m.MountOps(reg)
+	m.MountOperations(reg)
 
 	ctx := &mock.Context{InBody: []byte(`{"is_enabled":true,"changed_by":"u1","reason":"first"}`)}
 	ctx.SetUserID("tester")
@@ -149,7 +149,7 @@ func TestMountOps_RegistersBothOps(t *testing.T) {
 	}
 
 	deniedReg := &mock.Router{} // no Authorize configured (nil) => every guarded call is denied
-	m.MountOps(deniedReg)
+	m.MountOperations(deniedReg)
 	deniedCtx := &mock.Context{}
 	deniedCtx.SetUserID("someone")
 	deniedReg.Invoke("OP", "/"+agentswitch.OpGetAgentStatus, deniedCtx)
@@ -165,11 +165,11 @@ func TestNew_RequiresIDs(t *testing.T) {
 	}
 }
 
-func TestMountOps_GetAgentStatus_Empty(t *testing.T) {
+func TestMountOperations_GetAgentStatus_Empty(t *testing.T) {
 	m, _, _ := setup(t) // sin ningún Toggle previo — el registro está vacío
 	reg := &mock.Router{}
 	reg.Configure(mock.Config{Authorize: func(userID string, r model.Resource, a model.Action) bool { return true }})
-	m.MountOps(reg)
+	m.MountOperations(reg)
 
 	ctx := &mock.Context{}
 	ctx.SetUserID("tester")
@@ -183,11 +183,11 @@ func TestMountOps_GetAgentStatus_Empty(t *testing.T) {
 	}
 }
 
-func TestMountOps_ToggleAgentStatus_MissingChangedBy(t *testing.T) {
+func TestMountOperations_ToggleAgentStatus_MissingChangedBy(t *testing.T) {
 	m, _, _ := setup(t)
 	reg := &mock.Router{}
 	reg.Configure(mock.Config{Authorize: func(userID string, r model.Resource, a model.Action) bool { return true }})
-	m.MountOps(reg)
+	m.MountOperations(reg)
 
 	ctx := &mock.Context{InBody: []byte(`{"is_enabled":true}`)}
 	ctx.SetUserID("tester")
