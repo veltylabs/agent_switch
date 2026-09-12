@@ -41,8 +41,6 @@ func (m *AgentSwitch) DecodeFields(r model.FieldReader) {
 
 type AgentSwitchList []*AgentSwitch
 
-func (s *AgentSwitchList) Schema() []model.Field { return nil }
-func (s *AgentSwitchList) Pointers() []any     { return nil }
 func (s *AgentSwitchList) Len() int             { return len(*s) }
 func (s *AgentSwitchList) At(i int) model.Fielder { return (*s)[i] }
 func (s *AgentSwitchList) Append() model.Fielder  { v := &AgentSwitch{}; *s = append(*s, v); return v }
@@ -110,8 +108,6 @@ func (m *StatusEmptyResult) DecodeFields(r model.FieldReader) {
 
 type StatusEmptyResultList []*StatusEmptyResult
 
-func (s *StatusEmptyResultList) Schema() []model.Field { return nil }
-func (s *StatusEmptyResultList) Pointers() []any     { return nil }
 func (s *StatusEmptyResultList) Len() int             { return len(*s) }
 func (s *StatusEmptyResultList) At(i int) model.Fielder { return (*s)[i] }
 func (s *StatusEmptyResultList) Append() model.Fielder  { v := &StatusEmptyResult{}; *s = append(*s, v); return v }
@@ -154,8 +150,6 @@ func (m *StatusResult) DecodeFields(r model.FieldReader) {
 
 type StatusResultList []*StatusResult
 
-func (s *StatusResultList) Schema() []model.Field { return nil }
-func (s *StatusResultList) Pointers() []any     { return nil }
 func (s *StatusResultList) Len() int             { return len(*s) }
 func (s *StatusResultList) At(i int) model.Fielder { return (*s)[i] }
 func (s *StatusResultList) Append() model.Fielder  { v := &StatusResult{}; *s = append(*s, v); return v }
@@ -195,8 +189,6 @@ func (m *ToggleArgs) DecodeFields(r model.FieldReader) {
 
 type ToggleArgsList []*ToggleArgs
 
-func (s *ToggleArgsList) Schema() []model.Field { return nil }
-func (s *ToggleArgsList) Pointers() []any     { return nil }
 func (s *ToggleArgsList) Len() int             { return len(*s) }
 func (s *ToggleArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ToggleArgsList) Append() model.Fielder  { v := &ToggleArgs{}; *s = append(*s, v); return v }
@@ -233,8 +225,6 @@ func (m *ToggleResult) DecodeFields(r model.FieldReader) {
 
 type ToggleResultList []*ToggleResult
 
-func (s *ToggleResultList) Schema() []model.Field { return nil }
-func (s *ToggleResultList) Pointers() []any     { return nil }
 func (s *ToggleResultList) Len() int             { return len(*s) }
 func (s *ToggleResultList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ToggleResultList) Append() model.Fielder  { v := &ToggleResult{}; *s = append(*s, v); return v }
@@ -245,3 +235,4 @@ func (s *ToggleResultList) DecodeFields(_ model.FieldReader) {}
 func (m *ToggleResult) Validate(action byte) error {
 	return model.ValidateFields(action, m)
 }
+
